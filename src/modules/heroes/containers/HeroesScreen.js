@@ -26,7 +26,7 @@ class HeroesScreen extends Component {
     }
     
     render() {
-        return (
+        return (            
             <FlatList
                 style={Styles.container}
                 data={this.state.heroes}

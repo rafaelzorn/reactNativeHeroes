@@ -33,7 +33,16 @@ const styles = StyleSheet.create({
         fontSize: 14,
         paddingTop: 10,
         lineHeight: 22
-    }
+    },
+    containerComics: {
+        padding: 10
+    },
+    labelComics: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: '500',
+        marginBottom: 10
+    },
 })
 
 export default styles
