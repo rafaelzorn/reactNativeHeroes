@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
  
 const styles = StyleSheet.create({
-    cardContainer: {
+    container: {
         height: 231,
         width: 135,
         backgroundColor: 'white',
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         borderRadius: 3,
         marginBottom: 10
     },
-    cardImage: {
+    thumbnail: {
         width: 135,
         height: '100%',
         borderTopLeftRadius: 3,

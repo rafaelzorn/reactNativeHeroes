@@ -2,47 +2,38 @@ import { StyleSheet } from 'react-native'
  
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#0a0a0a'
+        backgroundColor: '#000'
     },
-    containerThumbnail: {        
+    marginBottom10: {
         marginBottom: 10
     },
     thumbnail: {
-        height: 248
+        height: 250
     },
-    containerName: {
+    alignCenter: {
         alignItems: 'center',
         justifyContent: 'center'
-    },
-    textName: {
+    },    
+    name: {
         color: '#fff',
         fontSize: 19,
         fontWeight: '500',
         marginBottom: 20
     },
-    containerDescription: {
-        padding: 10
-    },
-    labelDescription: {
+    label: {
         color: '#fff',
         fontSize: 16,
         fontWeight: '500'
     },
-    textDescription: {
+    padding10: {
+        padding: 10
+    },
+    text: {
         color: '#d2d2d2',
         fontSize: 14,
         paddingTop: 10,
         lineHeight: 22
-    },
-    containerComics: {
-        padding: 10
-    },
-    labelComics: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '500',
-        marginBottom: 10
-    },
+    }
 })
 
 export default styles

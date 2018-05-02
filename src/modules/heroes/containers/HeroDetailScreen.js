@@ -1,63 +1,62 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image } from 'react-native'
-import Styles from './styles/HeroDetailScreen'
+import { ScrollView, FlatList, Text, View, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { fetchHeroComics } from '../../../redux/actions'
 import Comic from '../components/Comic'
+import Loading from '../../../global/components/messages/Loading'
+import Styles from './styles/HeroDetailScreen'
 
 class HeroDetailScreen extends Component {
     constructor(props) {
-        super(props)
-        const { params } = this.props.navigation.state
+        super(props)        
         this.state = {
-            data: params.data,
-            comics: []
+            isLoadingComics: true
         }
     }
 
     componentDidMount() {
-        this.props.fetchHeroComics(this.state.data.id)
+        this.props.fetchHeroComics(this.props.navigation.state.params.data.id)
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.comics.length > 0) {
             this.setState({
-                heroes: nextProps.heroes,
-                comics: nextProps.comics
+                isLoadingComics: false
             })
         }
     }
 
-    render() {
-        const data = this.state.data
-        
+    render() {    
+        const data = this.props.navigation.state.params.data
+
         return (
             <ScrollView style={Styles.container}>
-                <View style={Styles.containerThumbnail}>
-                    <Image
-                        style={Styles.thumbnail}
-                        source={{ uri: data.thumbnail }}
-                    />   
+                <View style={Styles.marginBottom10}>
+                    <Image style={Styles.thumbnail} source={{ uri: data.thumbnail }} />  
                 </View>
 
-                <View style={Styles.containerName}>
-                    <Text style={Styles.textName}>{ data.name }</Text>                    
+                <View style={Styles.alignCenter}>
+                    <Text style={Styles.name}>{ data.name }</Text>                    
                 </View>
-
-                <View style={Styles.containerDescription}>
-                    <Text style={Styles.labelDescription}>Description</Text>
-                    <Text style={Styles.textDescription}>{ data.description }</Text>
+                
+                <View style={Styles.padding10}>
+                    <Text style={Styles.label}>Description</Text>
+                    <Text style={Styles.text}>{ data.description }</Text>
                 </View>
-
-                <View style={Styles.containerComics}>
-                    <Text style={Styles.labelComics}>Comics</Text>
-
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                        {this.state.comics.map(comic => (
-                            <Comic key={comic.id} data={comic} />
-                        ))}
-                    </ScrollView>
-                </View>
+                
+                {this.state.isLoadingComics ? <Loading message="Loading comics..." /> :
+                    <View style={Styles.padding10}>
+                        <Text style={[Styles.label, Styles.marginBottom10]}>Comics</Text>
+                        <FlatList 
+                            horizontal                 
+                            data={this.props.comics}
+                            renderItem={({ item }) => (
+                                <Comic data={item} />
+                            )}
+                            keyExtractor={item => item.id.toString()}
+                        />
+                    </View>
+                }
             </ScrollView>
         )
     }
