@@ -26,11 +26,19 @@ yarn install
 
 Crie sua conta na Marvel Developer Portal para adquirir sua API KEY e PRIVATE KEY. A API KEY e PRIVATE KEY devem ser adicionadas no .env que ainda não existe. Basta duplicar o .env.example, renomeando para .env e adicionar a chave.
 
-Instalar apk, dentro da pasta android execute o comando:
+### Instalar apk
+
+No seguinte caminho **"reactNativeHeroes\android\app\build\outputs\apk"** execute o comando: 
 
 ```
 adb install app-debug.apk
 ````
+
+Na raiz do projeto execute: 
+
+```
+adb reverse tcp:8081 tcp:8081
+```
 
 Por fim, execute:
 
