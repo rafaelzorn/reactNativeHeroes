@@ -8,26 +8,52 @@ import Styles from './styles/HeroDetailScreen'
 
 class HeroDetailScreen extends Component {
     constructor(props) {
-        super(props)        
+        super(props)       
+        const { params } = this.props.navigation.state
         this.state = {
-            isLoadingComics: true
+            data: params.data,
+            comics: [],
+            isLoading: true
         }
     }
 
     componentDidMount() {
-        this.props.fetchHeroComics(this.props.navigation.state.params.data.id)
+        this.props.fetchHeroComics(this.state.data.id)
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.comics.length > 0) {
+        if (nextProps.comics.length > 0 || nextProps.comics.length === 0) {
             this.setState({
-                isLoadingComics: false
+                comics: nextProps.comics,
+                isLoading: false         
             })
         }
     }
 
+    renderComics = () => {
+        if (this.state.isLoading && this.state.data.comics.length > 0) {
+            return <Loading message="Loading comics..." />
+        }
+
+        if (this.state.comics.length > 0) {
+            return (
+                <View style={Styles.padding10}>
+                    <Text style={[Styles.label, Styles.marginBottom10]}>Comics</Text>
+                    <FlatList 
+                        horizontal                 
+                        data={this.props.comics}
+                        renderItem={({ item }) => (
+                            <Comic data={item} />
+                        )}
+                        keyExtractor={item => item.id.toString()}
+                    />
+                </View>
+            )
+        }
+    }
+    
     render() {    
-        const data = this.props.navigation.state.params.data
+        const data = this.state.data
 
         return (
             <ScrollView style={Styles.container}>
@@ -43,20 +69,8 @@ class HeroDetailScreen extends Component {
                     <Text style={Styles.label}>Description</Text>
                     <Text style={Styles.text}>{ data.description }</Text>
                 </View>
-                
-                {this.state.isLoadingComics ? <Loading message="Loading comics..." /> :
-                    <View style={Styles.padding10}>
-                        <Text style={[Styles.label, Styles.marginBottom10]}>Comics</Text>
-                        <FlatList 
-                            horizontal                 
-                            data={this.props.comics}
-                            renderItem={({ item }) => (
-                                <Comic data={item} />
-                            )}
-                            keyExtractor={item => item.id.toString()}
-                        />
-                    </View>
-                }
+
+                {this.renderComics()}
             </ScrollView>
         )
     }
