@@ -11,7 +11,7 @@ const Hero = props => {
 		<TouchableOpacity 
 			style={Styles.item}
 			activeOpacity={0.7}
-			onPress={() => navigation.navigate('HeroDetailScreen', { data })}
+			onPress={() => navigation.navigate('HeroDetailScreen', data)}
 		>
 			<ImageBackground style={Styles.itemImage} source={{ uri: data.thumbnail }}>
 				<Text style={[Styles.itemText, Styles.itemTitle]}>{ data.name }</Text>

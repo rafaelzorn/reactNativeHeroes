@@ -6,7 +6,7 @@ export default StackNavigator({
     HeroesScreen: { 
         screen: HeroesScreen
     },
-    HeroDetailScreen: {
+    HeroDetailScreen: { 
         screen: HeroDetailScreen
     }
 }, {

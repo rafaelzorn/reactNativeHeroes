@@ -1,9 +1,15 @@
 import { http, AUTHENTICATION } from './Http'
 
-export const getHeroes = () => (
-    http.get(`characters?${AUTHENTICATION}`)
-)
+export const getHeroes = (term, offset) => {
+    let search = `&nameStartsWith=${term}`
 
-export const getHeroComics = (heroId) => (
-    http.get(`characters/${heroId}/comics?${AUTHENTICATION}`)
+    if (term === undefined || term === '') {
+        search = null
+    }
+
+    return http.get(`characters?${AUTHENTICATION}&limit=20&offset=${offset}${search}`)
+}
+
+export const getHeroComics = (heroId, offset) => (
+    http.get(`characters/${heroId}/comics?${AUTHENTICATION}&limit=20&offset=${offset}`)
 )

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { ScrollView, FlatList, Text, View, Image } from 'react-native'
+import { ScrollView, Text, View, Image, FlatList, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
-import { fetchHeroComics } from '../../../redux/actions'
+import { fetchHeroComics, reset } from '../../../redux/actions/HeroComics'
 import Comic from '../components/Comic'
-import Loading from '../../../global/components/messages/Loading'
+import { Warning } from '../../../global/components'
 import Styles from './styles/HeroDetailScreen'
 
 class HeroDetailScreen extends Component {
@@ -11,47 +11,45 @@ class HeroDetailScreen extends Component {
         super(props)       
         const { params } = this.props.navigation.state
         this.state = {
-            data: params.data,
-            comics: [],
-            isLoading: true
+            data: params
+        }        
+    }
+
+    componentDidMount() { 
+        this.props.reset()
+        this.props.fetchHeroComics(this.state.data.id, 1)
+    }
+
+    moreComics = () => {
+        if (this.props.hasMore) {            
+            this.props.fetchHeroComics(this.state.data.id, this.props.currentPage)
         }
     }
 
-    componentDidMount() {
-        this.props.fetchHeroComics(this.state.data.id)
-    }
+    renderComics = () => (
+        <View style={Styles.padding10}>
+            <Text style={[Styles.label, Styles.marginBottom10]}>Comics</Text>
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.comics.length > 0 || nextProps.comics.length === 0) {
-            this.setState({
-                comics: nextProps.comics,
-                isLoading: false         
-            })
-        }
-    }
+            {this.props.comics.length === 0 && !this.props.hasMore ? 
+                        <Warning message="OPS! No Comics found." /> : null}
 
-    renderComics = () => {
-        if (this.state.isLoading && this.state.data.comics.length > 0) {
-            return <Loading message="Loading comics..." />
-        }
+            <FlatList       
+                horizontal                         
+                data={this.props.comics}
+                renderItem={({ item }) => (
+                    <Comic data={item} />
+                )}
+                keyExtractor={(item, index) => index.toString()}
+                onEndReached={this.moreComics}
+                onEndReachedThreshold={0.1}
+                ListFooterComponent={
+                    this.props.hasMore ? 
+                        <ActivityIndicator size="large" color="#ea4848" /> : null
+                    }   
+            />
+        </View>
+    )
 
-        if (this.state.comics.length > 0) {
-            return (
-                <View style={Styles.padding10}>
-                    <Text style={[Styles.label, Styles.marginBottom10]}>Comics</Text>
-                    <FlatList 
-                        horizontal                 
-                        data={this.props.comics}
-                        renderItem={({ item }) => (
-                            <Comic data={item} />
-                        )}
-                        keyExtractor={item => item.id.toString()}
-                    />
-                </View>
-            )
-        }
-    }
-    
     render() {    
         const data = this.state.data
 
@@ -77,7 +75,10 @@ class HeroDetailScreen extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    comics: state.heroes.comics    
+    comics: state.heroComics.comics,
+    loading: state.heroComics.loading,
+    currentPage: state.heroComics.currentPage,
+    hasMore: state.heroComics.hasMore
 })
 
-export default connect(mapStateToProps, { fetchHeroComics })(HeroDetailScreen)
+export default connect(mapStateToProps, { fetchHeroComics, reset })(HeroDetailScreen)
