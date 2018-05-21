@@ -9,6 +9,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "blueimp-md5": "^2.10.0",
+    "prop-types": "^15.6.1",
     "react": "16.3.1",
     "react-native": "0.55.3",
     "react-native-dotenv": "^0.1.1",

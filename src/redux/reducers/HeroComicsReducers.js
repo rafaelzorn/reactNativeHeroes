@@ -1,10 +1,10 @@
-import { FETCH_HERO_COMICS, HAS_MORE, RESET } from '../types/HeroComics'
+import { FETCH_HERO_COMICS, HAS_MORE_COMICS, RESET } from '../types/HeroComics'
 
 export const INITIAL_STATE = {
     comics: [],
     loading: true,
     currentPage: 1,
-    hasMore: true
+    hasMoreComics: true
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -16,8 +16,8 @@ export default (state = INITIAL_STATE, action) => {
                 loading: false, 
                 currentPage: state.currentPage + 1
             }
-        case HAS_MORE:
-            return { ...state, hasMore: action.payload }
+        case HAS_MORE_COMICS:
+            return { ...state, hasMoreComics: action.payload }
         case RESET: 
             return INITIAL_STATE
         default:

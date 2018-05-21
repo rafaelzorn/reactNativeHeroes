@@ -1,11 +1,11 @@
-import { FETCH_HEROES, SEARCH, HAS_MORE } from '../types/Heroes'
+import { FETCH_HEROES, SEARCH, HAS_MORE_HEROES } from '../types/Heroes'
 
 export const INITIAL_STATE = {
     heroes: [],
     loading: true,
     search: '',
     currentPage: 1,
-    hasMore: true
+    hasMoreHeroes: true
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -24,10 +24,10 @@ export default (state = INITIAL_STATE, action) => {
                 heroes: [], 
                 loading: true, 
                 currentPage: 1,
-                hasMore: true
+                hasMoreHeroes: true
             }    
-        case HAS_MORE:
-            return { ...state, hasMore: action.payload }
+        case HAS_MORE_HEROES:
+            return { ...state, hasMoreHeroes: action.payload }
         default:
             return state
     }

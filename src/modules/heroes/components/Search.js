@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { View, TextInput, TouchableHighlight } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { search } from '../../../redux/actions/Heroes'
 import Styles from './styles/Search'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 
 class Search extends Component {
     constructor(props) {
@@ -50,14 +51,19 @@ class Search extends Component {
                     onPress={() => this.clear()}
                 >
                     <Icon name="clear" size={30} color="#5d5d5d" />
-                </TouchableHighlight> : null }
+                </TouchableHighlight> : null}
             </View>
         )   
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     term: state.heroes.search
 })
+
+Search.propTypes = {
+    search: PropTypes.func,
+    term: PropTypes.string
+}
 
 export default connect(mapStateToProps, { search })(Search)

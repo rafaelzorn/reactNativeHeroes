@@ -3,12 +3,8 @@ import HeroesScreen from '../modules/heroes/containers/HeroesScreen'
 import HeroDetailScreen from '../modules/heroes/containers/HeroDetailScreen'
 
 export default StackNavigator({
-    HeroesScreen: { 
-        screen: HeroesScreen
-    },
-    HeroDetailScreen: { 
-        screen: HeroDetailScreen
-    }
+    HeroesScreen: { screen: HeroesScreen },
+    HeroDetailScreen: { screen: HeroDetailScreen }
 }, {
     initialRouteName: 'HeroesScreen',
     headerMode: {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, FlatList, ActivityIndicator } from 'react-native'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchHeroes } from '../../../redux/actions/Heroes'
 import Hero from '../components/Hero'
@@ -14,13 +15,13 @@ class HeroesScreen extends Component {
     }
     
     componentWillReceiveProps = nextProps => { 
-        if (nextProps.heroes.length === 0 && nextProps.hasMore) {
+        if (nextProps.heroes.length === 0 && nextProps.hasMoreHeroes) {
             this.props.fetchHeroes(nextProps.search, nextProps.currentPage)
         }
     }
 
     moreHeroes = () => {
-        if (this.props.hasMore) {            
+        if (this.props.hasMoreHeroes) {            
             this.props.fetchHeroes(this.props.search, this.props.currentPage)
         }
     }
@@ -30,10 +31,10 @@ class HeroesScreen extends Component {
             <View style={Styles.container}>
                 <Search />           
                 
-                {this.props.heroes.length === 0 && !this.props.hasMore ? 
+                {this.props.heroes.length === 0 && !this.props.hasMoreHeroes ? 
                         <Warning message="OPS! No Heroes found." /> : null}
 
-                { this.props.loading ? <Loading /> : 
+                {this.props.loading ? <Loading /> : 
                     <FlatList                               
                         data={this.props.heroes}
                         renderItem={({ item }) => (
@@ -43,21 +44,29 @@ class HeroesScreen extends Component {
                         onEndReached={this.moreHeroes}
                         onEndReachedThreshold={0.1}
                         ListFooterComponent={
-                            this.props.hasMore ? 
-                                <ActivityIndicator size="large" color="#ea4848" /> : null
-                            }   
-                    />}                    
+                            this.props.hasMoreHeroes ? 
+                                <ActivityIndicator size="large" color="#ea4848" /> : null}   
+                    /> }                    
             </View>
         )   
     }
 }
 
-const mapStateToProps = (state) => ({
+HeroesScreen.propTypes = {
+    fetchHeroes: PropTypes.func,
+    heroes: PropTypes.array,
+    loading: PropTypes.bool,
+    search: PropTypes.string,
+    currentPage: PropTypes.number,
+    hasMoreHeroes: PropTypes.bool
+}
+
+const mapStateToProps = state => ({
     heroes: state.heroes.heroes,
     loading: state.heroes.loading,
     search: state.heroes.search,
     currentPage: state.heroes.currentPage,
-    hasMore: state.heroes.hasMore
+    hasMoreHeroes: state.heroes.hasMoreHeroes
 })
 
 export default connect(mapStateToProps, { fetchHeroes })(HeroesScreen)

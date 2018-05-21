@@ -1,5 +1,5 @@
 import { getHeroes } from '../../../services/api/Heroes'
-import { FETCH_HEROES, SEARCH, HAS_MORE } from '../../types/Heroes'
+import { FETCH_HEROES, SEARCH, HAS_MORE_HEROES } from '../../types/Heroes'
 
 export const fetchHeroes = (term, page) => (
     async (dispatch) => {
@@ -9,7 +9,7 @@ export const fetchHeroes = (term, page) => (
 
         const totalPages = Math.ceil(heroes.data.data.total / 20)
 
-        hasMore(!(totalPages === 0 || page === totalPages), dispatch)
+        hasMoreHeroes(!(totalPages === 0 || page === totalPages), dispatch)
         
         const action = {
             type: FETCH_HEROES,
@@ -25,9 +25,9 @@ export const search = term => ({
     payload: term
 })
 
-const hasMore = (more, dispatch) => (
+const hasMoreHeroes = (more, dispatch) => (
     dispatch({
-        type: HAS_MORE,
+        type: HAS_MORE_HEROES,
         payload: more
     })
 )

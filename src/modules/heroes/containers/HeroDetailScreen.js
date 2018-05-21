@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, View, Image, FlatList, ActivityIndicator } from 'react-native'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchHeroComics, reset } from '../../../redux/actions/HeroComics'
 import Comic from '../components/Comic'
@@ -15,13 +16,13 @@ class HeroDetailScreen extends Component {
         }        
     }
 
-    componentDidMount() { 
+    componentDidMount = () => { 
         this.props.reset()
         this.props.fetchHeroComics(this.state.data.id, 1)
     }
 
     moreComics = () => {
-        if (this.props.hasMore) {            
+        if (this.props.hasMoreComics) {            
             this.props.fetchHeroComics(this.state.data.id, this.props.currentPage)
         }
     }
@@ -30,7 +31,7 @@ class HeroDetailScreen extends Component {
         <View style={Styles.padding10}>
             <Text style={[Styles.label, Styles.marginBottom10]}>Comics</Text>
 
-            {this.props.comics.length === 0 && !this.props.hasMore ? 
+            {this.props.comics.length === 0 && !this.props.hasMoreComics ? 
                         <Warning message="OPS! No Comics found." /> : null}
 
             <FlatList       
@@ -43,9 +44,8 @@ class HeroDetailScreen extends Component {
                 onEndReached={this.moreComics}
                 onEndReachedThreshold={0.1}
                 ListFooterComponent={
-                    this.props.hasMore ? 
-                        <ActivityIndicator size="large" color="#ea4848" /> : null
-                    }   
+                    this.props.hasMoreComics ? 
+                        <ActivityIndicator size="large" color="#ea4848" /> : null}
             />
         </View>
     )
@@ -74,11 +74,20 @@ class HeroDetailScreen extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     comics: state.heroComics.comics,
     loading: state.heroComics.loading,
     currentPage: state.heroComics.currentPage,
-    hasMore: state.heroComics.hasMore
+    hasMoreComics: state.heroComics.hasMoreComics
 })
+
+HeroDetailScreen.propTypes = {
+    reset: PropTypes.func,
+    fetchHeroComics: PropTypes.func,
+    comics: PropTypes.array,
+    loading: PropTypes.bool,
+    currentPage: PropTypes.number,
+    hasMoreComics: PropTypes.bool
+}
 
 export default connect(mapStateToProps, { fetchHeroComics, reset })(HeroDetailScreen)

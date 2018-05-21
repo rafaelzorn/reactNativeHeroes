@@ -1,5 +1,6 @@
 import React from 'react'
 import { TouchableOpacity, ImageBackground, Text } from 'react-native'
+import PropTypes from 'prop-types'
 import { formatHeroData } from '../utils/Heroes'
 import Styles from './styles/Hero'
 
@@ -8,16 +9,21 @@ const Hero = props => {
     const data = formatHeroData(props.data)
 	
     return (
-		<TouchableOpacity 
-			style={Styles.item}
-			activeOpacity={0.7}
-			onPress={() => navigation.navigate('HeroDetailScreen', data)}
-		>
-			<ImageBackground style={Styles.itemImage} source={{ uri: data.thumbnail }}>
-				<Text style={[Styles.itemText, Styles.itemTitle]}>{ data.name }</Text>
-			</ImageBackground>
-		</TouchableOpacity>
+        <TouchableOpacity 
+            style={Styles.item}
+            activeOpacity={0.7}
+            onPress={() => navigation.navigate('HeroDetailScreen', data)}
+        >
+            <ImageBackground style={Styles.itemImage} source={{ uri: data.thumbnail }}>
+                <Text style={[Styles.itemText, Styles.itemTitle]}>{ data.name }</Text>
+            </ImageBackground>
+        </TouchableOpacity>
     )
+}
+
+Hero.propTypes = {
+    navigation: PropTypes.object,
+    data: PropTypes.object
 }
 
 export default Hero

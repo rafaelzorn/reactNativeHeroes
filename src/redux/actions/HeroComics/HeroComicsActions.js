@@ -1,5 +1,5 @@
 import { getHeroComics } from '../../../services/api/Heroes'
-import { FETCH_HERO_COMICS, HAS_MORE, RESET } from '../../../redux/types/HeroComics'
+import { FETCH_HERO_COMICS, HAS_MORE_COMICS, RESET } from '../../../redux/types/HeroComics'
 
 export const fetchHeroComics = (heroId, page) => (
     async (dispatch) => {
@@ -9,7 +9,7 @@ export const fetchHeroComics = (heroId, page) => (
 
         const totalPages = Math.ceil(comics.data.data.total / 20)
 
-        hasMore(!(totalPages === 0 || page === totalPages), dispatch)
+        hasMoreComics(!(totalPages === 0 || page === totalPages), dispatch)
         
         const action = {
             type: FETCH_HERO_COMICS,
@@ -24,9 +24,9 @@ export const reset = () => ({
     type: RESET
 })
 
-const hasMore = (more, dispatch) => (
+const hasMoreComics = (more, dispatch) => (
     dispatch({
-        type: HAS_MORE,
+        type: HAS_MORE_COMICS,
         payload: more
     })
 )
