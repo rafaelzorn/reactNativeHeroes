@@ -48,7 +48,7 @@ react-native start
 
 ## Screenshots
 
-![Screenshot 1](https://image.ibb.co/f87Tin/image.jpg)
+![Screenshot 1](https://image.ibb.co/cs1smJ/image.jpg)
 
 ## Construído com
 
