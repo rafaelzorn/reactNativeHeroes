@@ -29,5 +29,4 @@ Research Marvel heroes to read additional information about them.
 - React Native
 - React Navigation
 - Redux
-- Styled Component
 - Other React Native libs
