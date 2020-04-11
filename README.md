@@ -1,59 +1,33 @@
-# React Native Heroes
+<p align="center">
+  <h3 align="center">React Native Heroes</h3>
+</p>
 
-Pesquise sobre os heróis da Marvel para ler informações adicionais sobre eles.
+---
 
-### Instalando
+## Overview
 
-Primeiro você tem que usar o seu Terminal para chegar ao diretório que você deseja armazenar o projeto. Então você executa:
+Research Marvel heroes to read additional information about them.
 
-```
-git clone https://github.com/rafaelzorn/reactNativeHeroes.git
-```
+## Preview
 
-Acesse o diretório criado e você estará no diretório-raiz do projeto:
+![preview-1](./preview-1.jpg)
 
-```
-cd reactNativeHeroes
-```
+## APIs
 
-Instalar as dependências do projeto:
+- [Marvel Developer Portal](https://developer.marvel.com/)
 
-```
-yarn install
-````
+## Running the project
 
-### .ENV
+- You need to set up all the react-native enviroment
+- Clone this repository
+- Install all dependencies using the command `yarn`
+- Fill the `.env` file
+- Run `react-native run-android` while you are running a Android emulator
 
-Crie sua conta na Marvel Developer Portal para adquirir sua API KEY e PRIVATE KEY. A API KEY e PRIVATE KEY devem ser adicionadas no .env que ainda não existe. Basta duplicar o .env.example, renomeando para .env e adicionar a chave.
+## Used technologies
 
-### Instalar apk
-
-No seguinte caminho **"reactNativeHeroes\android\app\build\outputs\apk"** execute o comando: 
-
-```
-adb install app-debug.apk
-````
-
-Na raiz do projeto execute: 
-
-```
-adb reverse tcp:8081 tcp:8081
-```
-
-Por fim, execute:
-
-```
-react-native start
-````
-
-## Screenshots
-
-![Screenshot 1](https://image.ibb.co/cs1smJ/image.jpg)
-
-## Construído com
-
-* [React Native](https://facebook.github.io/react-native/)
-* [Redux](https://redux.js.org)
-* [Redux Thunk](https://github.com/gaearon/redux-thunk)
-* [Axios](https://github.com/axios/axios)
-* [Marvel Developer Portal](https://developer.marvel.com/)
+- React Native
+- React Navigation
+- Redux
+- Styled Component
+- Other React Native libs
